@@ -10,6 +10,7 @@ npm install
 ```
 npm start
 ```
+3. Test with 800px as width
 
 ### Description
 Create a feed of cards using the sample data provided. Each card will feature different categories.
