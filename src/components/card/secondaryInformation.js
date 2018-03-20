@@ -2,43 +2,6 @@ import React, { Component } from 'react';
 import './card.css';
 
 class SecondaryInformation extends Component {
-  constructor(props){
-    super(props);
-      this.state = {
-        secondaryInformation: {}
-      };
-  }
-  componentWillMount(){
-    var type = this.props.itemData["@type"]
-
-    //Set key information based on type
-    if(type.indexOf("Reservation") !== -1){
-      if(type === "LodgingReservation"){
-
-      }else if(type === "FoodEstablishmentReservation"){
-
-      }else{
-        //Rental
-      }
-    }else{
-      if(this.props.itemData["@type"] === "Order"){
-        this.setState({
-          secondaryInformation: {
-            "price": this.props.itemData['x-price'],
-            "orderNumber": this.props.itemData['orderNumber'],
-          }
-        });
-      }else{
-        this.setState({
-          secondaryInformation: {
-            "trackingUrl": this.props.itemData['trackingUrl'],
-            "trackingNumber": this.props.itemData['trackingNumber'],
-          }
-        });
-      }
-    }
-
-  }
   render() {
     var type = this.props.itemData["@type"];
 
@@ -54,10 +17,12 @@ class SecondaryInformation extends Component {
       }
     }else{
       if(type === "Order"){
-        lineTwo = "Invoice: " + this.state.secondaryInformation.orderNumber;
-        lineThree = this.state.secondaryInformation.price;
+        lineTwo = "Invoice: " + this.props.itemData['orderNumber'];
+        lineThree = this.props.itemData['x-price'];
       }else{
-        lineThree = <a href={this.state.secondaryInformation.trackingUrl} target="blank" style={{fontWeight: "bold"}}>Track it</a>
+        lineOne = "Tracking:"
+        lineTwo = this.props.itemData['trackingNumber'];
+        lineThree = <a href={this.props.itemData['trackingUrl']} target="blank" style={{fontWeight: "bold"}}>Track it</a>
       }
     }
     return (

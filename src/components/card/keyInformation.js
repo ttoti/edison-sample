@@ -5,78 +5,54 @@ import './card.css';
 class KeyInformation extends Component {
   constructor(props){
     super(props);
-      this.state = {
-        keyInformation: {}
-      };
+    this.convertTime = this.convertTime.bind(this);
   }
-  componentWillMount(){
-    var type = this.props.itemData["@type"];
+  convertTime(stringDate){
+    var time = new Date(stringDate);
+    var hours = time.getHours() > 12 ? time.getHours() - 12 : time.getHours();
+    var am_pm = time.getHours() >= 12 ? "PM" : "AM";
+    hours = hours < 10 ? "0" + hours : hours;
+    var minutes = time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes();
 
-    //Set key information based on type
-    if(type.indexOf("Reservation") !== -1){
-      if(type === "LodgingReservation"){
-        this.setState({
-          keyInformation: {
-
-          }
-        });
-      }else if(type === "FoodEstablishmentReservation"){
-        this.setState({
-          keyInformation: {
-
-          }
-        });
-      }else{
-        //Rental
-        this.setState({
-          keyInformation: {
-
-          }
-        });
-      }
-    }else{
-      if(type === "Order"){
-        //Set key information for orders
-        this.setState({
-          keyInformation: {
-            "orderNumber": this.props.itemData['orderNumber'],
-            "orderDate": this.props.itemData['orderDate'],
-            "seller": this.props.itemData.seller['name'],
-          }
-        });
-      }else{
-        //Set key information for delivery
-        this.setState({
-          keyInformation: {
-            "trackingUrl": this.props.itemData['trackingUrl'],
-            "trackingNumber": this.props.itemData['trackingNumber'],
-            "expectedArrival": this.props.itemData['expectedArrivalUntil'],
-            "itemName": this.props.itemData.partOfOrder.broker.name,
-          }
-        });
-      }
-    }
+    time = hours + ":" + minutes + " " + am_pm;
+    return time;
   }
   render() {
-    var type = this.props.itemData["@type"];
 
+    var type = this.props.itemData["@type"];
     var lineOne = null, lineTwo = null, lineThree = null, lineFour = null;
     if(type.indexOf("Reservation") !== -1){
       if(type === "LodgingReservation"){
+        var checkinTime = this.convertTime(this.props.itemData["checkinTime"]);
+        var checkoutTime = this.convertTime(this.props.itemData["checkoutTime"]);
+
+        lineOne = "Reservation at " + this.props.itemData.reservationFor["name"];
+        lineThree = "Check in: On " + this.props.itemData["checkinTime"].substring(5, 10) + " - At " + checkinTime;
+        lineFour = "Check out: On " + this.props.itemData["checkoutTime"].substring(5, 10)  + " -  At " + checkoutTime;
 
       }else if(type === "FoodEstablishmentReservation"){
+        var reservTime = this.convertTime(this.props.itemData["startTime"]);
+
+        lineOne = "Reservation for " + this.props.itemData["partySize"];
+        lineTwo = "At the " + this.props.itemData.reservationFor['name'];
+        lineFour = "On: " + this.props.itemData["startTime"].substring(5, 10) + " - At " + reservTime;
 
       }else{
         //Rental
+        var pickupTime = this.convertTime(this.props.itemData["pickupTime"]);
+        var dropoffTime = this.convertTime(this.props.itemData["dropoffTime"]);
 
+        lineOne = "Car rental at " + this.props.itemData.provider.name;
+        lineThree = "Pick up: On " + this.props.itemData["pickupTime"].substring(5, 10) + " - At " + pickupTime;
+        lineFour = "Drop off: On " + this.props.itemData["dropoffTime"].substring(5, 10)  + " -  At " + dropoffTime;
       }
     }else{
       if(type === "Order"){
-        lineTwo = "Order placed with " + this.state.keyInformation.seller;
-        lineFour = "On: " + this.state.keyInformation.orderDate.substring(5, 10);
+        lineTwo = "Order placed with " + this.props.itemData.seller['name'];
+        lineFour = "On: " + this.props.itemData['orderDate'].substring(5, 10);
       }else{
-        lineTwo = "Your order from " + this.state.keyInformation.itemName + " is on the way"
-        lineFour = "Arriving: " + this.state.keyInformation.expectedArrival.substring(5, 10);
+        lineTwo = "Your order from " + this.props.itemData.partOfOrder.broker.name + " is on the way"
+        lineFour = "Arriving: " + this.props.itemData['expectedArrivalUntil'].substring(5, 10);
       }
     }
     return (
