@@ -7,7 +7,7 @@ class ExpandedCardView extends Component {
   render() {
     return (
       <div>
-        <Collapsible trigger={<FontAwesome name={"angle-down"} style={{width: '100%', textAlign: 'center'}}/>} transitionTime={150}>
+        <Collapsible trigger={<FontAwesome name={"angle-down"} style={{width: '100%', textAlign: 'center', color: "black"}}/>} transitionTime={150}>
         <table>
           <tbody>
             <tr>

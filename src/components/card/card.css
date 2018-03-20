@@ -1,22 +1,44 @@
 .card-container{
   display: grid;
   grid-template-columns: 25% auto auto;
+  margin-top: 10px;
 }
 
 .grid-rows {
   display: grid;
   grid-template-rows: auto;
-  background-color: #2196F3;
 }
 
 .grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
   text-align: center;
 }
 
 .row-item {
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(0, 0, 0, 0.8);
-  text-align: center;
+  text-align: left;
+  padding: 5px;
+  font-size: 14px;
+}
+.fa{
+  color: white;
+  margin-top: 8px;
+}
+.circle-icon{
+  background-color: #0097ff;
+  width: 35%;
+  margin: 0 auto;
+  padding: 15px;
+  border-radius: 60px;
+  height: 50px;
+}
+a{
+  background-color: #0097ff;
+  color: white;
+  padding: 5px;
+  border-radius: 50px;
+  text-decoration: none;
+}
+a:hover{
+  background-color: #0079cc;
 }
