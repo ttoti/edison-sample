@@ -3,7 +3,10 @@
   grid-template-columns: 25% 45% 30%;
   margin-top: 10px;
 }
-
+.expanded-card-container{
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
 .grid-rows {
   display: grid;
   grid-template-rows: auto;
@@ -12,11 +15,14 @@
 .grid-item {
   text-align: center;
 }
-
+.section-item{
+  font-size: 13px;
+  text-align: left;
+}
 .row-item {
   text-align: left;
   padding: 5px;
-  font-size: 12px;
+  font-size: 13px;
 }
 .fa{
   color: white;
@@ -39,4 +45,7 @@ a{
 }
 a:hover{
   background-color: #0079cc;
+}
+img{
+  height: 40px;
 }

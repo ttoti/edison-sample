@@ -9,7 +9,6 @@ class SecondaryInformation extends Component {
     if(type.indexOf("Reservation") !== -1){
       lineThree = <a href={"https://www.google.com/maps/search/?api=1&query=" + encodeURI(this.props.itemData.reservationFor['address'])} target="blank" style={{fontWeight: "bold"}}>Locate it</a>;
       if(type === "LodgingReservation"){
-        console.log(this.props.itemData);
         lineOne = "Reservation: " + this.props.itemData["reservationId"];
         lineFour = this.props.itemData.reservationFor["telephone"];
 
