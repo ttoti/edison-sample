@@ -7,13 +7,19 @@ class SecondaryInformation extends Component {
 
     var lineOne = null, lineTwo = null, lineThree = null, lineFour = null;
     if(type.indexOf("Reservation") !== -1){
+      lineThree = <a href={"https://www.google.com/maps/search/?api=1&query=" + encodeURI(this.props.itemData.reservationFor['address'])} target="blank" style={{fontWeight: "bold"}}>Locate it</a>;
       if(type === "LodgingReservation"){
+        console.log(this.props.itemData);
+        lineOne = "Reservation: " + this.props.itemData["reservationId"];
+        lineFour = this.props.itemData.reservationFor["telephone"];
 
       }else if(type === "FoodEstablishmentReservation"){
-
+        lineFour = this.props.itemData.reservationFor["telephone"];
       }else{
         //Rental
-
+        lineOne = "Under: " + this.props.itemData.underName['name'];
+        lineThree = <a href={"https://www.google.com/maps/search/?api=1&query=" + encodeURI(this.props.itemData.pickupLocation['address'])} target="blank" style={{fontWeight: "bold"}}>Locate it</a>;
+        lineFour = this.props.itemData.reservationFor["name"];
       }
     }else{
       if(type === "Order"){
