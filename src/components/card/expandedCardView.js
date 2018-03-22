@@ -22,19 +22,30 @@ class ExpandedCardView extends Component {
             <div>
               <div className="section-item"></div>
               <div className="grid-rows">
-                "wot"
+                <div>Reservation: {itemData.reservationId}</div>
+                <div>Address: {itemData.reservationFor.address}</div>
               </div>
             </div>
           </div>
         );
       }else{
         //Rental
+        var address;
+        if(itemData.dropoffLocation.address === itemData.pickupLocation.address){
+          address = "Same as pick-up location";
+        }else{
+          address = itemData.pickupLocation.address;
+        }
         section = (
           <div>
             <div>
               <div className="section-item"></div>
               <div className="grid-rows">
-                "wot"
+                <div>Reservation: {itemData.reservationId}</div>
+                <div>
+                  Drop-off location:
+                  {address}
+                </div>
               </div>
             </div>
           </div>
@@ -42,13 +53,14 @@ class ExpandedCardView extends Component {
       }
     }else{
       if(type === "Order"){
+        //Orders
         var orderedItems = itemData.acceptedOffer.map((item, index) => {
           return (<div key={index}>
-              {"Price: "+ item["price"] + " "}
-              {item["eligibleQuantity"]["value"] + "x "}
-              {item["itemOffered"]["name"].substring(0, 35) + "..."}
-            <img src={item["itemOffered"]["image"]} />
-            </div>)
+            {"Price: "+ item["price"] + " "}
+            {item["eligibleQuantity"]["value"] + "x "}
+            {item["itemOffered"]["name"].substring(0, 35) + "..."}
+            <img src={item["itemOffered"]["image"]} alt={item["itemOffered"]["name"]}/>
+          </div>);
         });
         section = (
           <div>
@@ -61,13 +73,14 @@ class ExpandedCardView extends Component {
           </div>
         );
       }else{
-        var orderedItems = itemData.partOfOrder.acceptedOffer.map((item, index) => {
-          console.log(item);
-          return (<div key={index}>
+        //Delivery
+        orderedItems = itemData.partOfOrder.acceptedOffer.map((item, index) => {
+          return ( <div key={index}>
               {"Price: "+ item["price"] + " "}
               {item["eligibleQuantity"]["value"] + "x "}
               {item["itemOffered"]["name"]}
-            <img src={item["itemOffered"]["image"]} /> </div>)
+              <img src={item["itemOffered"]["image"]} alt={item["itemOffered"]["name"]}/>
+            </div>);
         });
         section = (
           <div>
@@ -85,9 +98,9 @@ class ExpandedCardView extends Component {
     }
 
     return (
-      <div>
+      <div style={{paddingBottom: "15px"}}>
         <Collapsible trigger={<FontAwesome name={"angle-down"} style={{width: '100%', textAlign: 'center', color: "black"}}/>} transitionTime={150}>
-          <div style={{textAlign: "center"}}><h5>The fine details</h5></div>
+          <div style={{textAlign: "center"}}><h5>More details</h5></div>
           <div className="expanded-card-container">
           <div className="grid-item section-item"></div>
           <div className="grid-item section-item">{section}</div>
